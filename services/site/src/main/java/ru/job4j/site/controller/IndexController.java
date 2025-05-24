@@ -7,15 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import ru.job4j.site.dto.InterviewDTO;
-import ru.job4j.site.dto.ProfileDTO;
 import ru.job4j.site.service.*;
 
 import javax.servlet.http.HttpServletRequest;
-
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import static ru.job4j.site.controller.RequestResponseTools.getToken;
 
@@ -47,13 +42,12 @@ public class IndexController {
             log.error("Remote application not responding. Error: {}. {}, ", e.getCause(), e.getMessage());
         }
         List<InterviewDTO> interviews = interviewsService.getByType(1);
-        Set<ProfileDTO> userList = interviews.stream()
-                .map(x -> profilesService.getProfileById(x.getSubmitterId()))
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toSet());
+        List<Integer> ids = interviews
+                .stream()
+                .map(InterviewDTO::getSubmitterId)
+                .toList();
         model.addAttribute("new_interviews", interviews);
-        model.addAttribute("users", userList);
+        model.addAttribute("users", profilesService.getProfilesByIds(ids));
         return "index";
     }
 }

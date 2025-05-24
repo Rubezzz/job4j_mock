@@ -102,6 +102,20 @@ public class WebClientAuthCall {
                 .doOnError(err -> log.error("API not found: {}", err.getMessage()));
     }
 
+    public Mono<ResponseEntity<List<ProfileDTO>>> doGetByIds(String url, List<Integer> ids) {
+        String idsStr = ids.toString().substring(1, ids.toString().length()-1);
+        return webClient
+                .get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(url)
+                        .queryParam("id", idsStr)  // ?id=1,2,3
+                        .build())
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .toEntityList(ProfileDTO.class)
+                .doOnError(err -> log.error("API request failed: {}", err.getMessage()));
+    }
+
     /**
      * Метод обрабатывает запрос get получения изображения из сервиса Auth
      *
