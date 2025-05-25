@@ -18,6 +18,7 @@ import static ru.job4j.site.controller.RequestResponseTools.getToken;
 @AllArgsConstructor
 @Slf4j
 public class IndexController {
+    private static final int MODE_NEW = 1;
     private final CategoriesService categoriesService;
     private final InterviewsService interviewsService;
     private final AuthService authService;
@@ -41,7 +42,7 @@ public class IndexController {
         } catch (Exception e) {
             log.error("Remote application not responding. Error: {}. {}, ", e.getCause(), e.getMessage());
         }
-        List<InterviewDTO> interviews = interviewsService.getByType(1);
+        List<InterviewDTO> interviews = interviewsService.getByType(MODE_NEW);
         List<Integer> ids = interviews
                 .stream()
                 .map(InterviewDTO::getSubmitterId)
