@@ -41,4 +41,8 @@ public class ProfileService {
     public List<ProfileDTO> findProfilesOrderByCreatedDesc() {
         return personRepository.findProfileOrderByCreatedDesc();
     }
+
+    public List<ProfileDTO> findAllByIds(List<Integer> id) {
+        return personRepository.findAllById(id);
+    }
 }

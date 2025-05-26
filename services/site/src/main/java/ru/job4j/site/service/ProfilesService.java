@@ -50,4 +50,12 @@ public class ProfilesService {
                 .block();
         return responseEntity.getBody();
     }
+
+    public List<ProfileDTO> getProfilesByIds(List<Integer> ids) {
+        var uri = URL_PROFILES + "list";
+        var responseEntity = webClientAuthCall
+                .doGetByIds(uri, ids)
+                .block();
+        return responseEntity.getBody();
+    }
 }

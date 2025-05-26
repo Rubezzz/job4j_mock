@@ -72,4 +72,7 @@ public interface PersonRepository extends CrudRepository<Profile, Integer> {
      */
     @Query("SELECT new ru.checkdev.auth.dto.ProfileDTO(p.id, p.username, p.experience, p.photo.id, p.updated, p.created) FROM profile p ORDER BY p.created DESC")
     List<ProfileDTO> findProfileOrderByCreatedDesc();
+
+    @Query("SELECT new ru.checkdev.auth.dto.ProfileDTO(p.id, p.username, p.experience, p.photo.id, p.updated, p.created) FROM profile p WHERE p.id IN :id")
+    List<ProfileDTO> findAllById(@Param("id") List<Integer> id);
 }
