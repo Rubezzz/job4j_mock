@@ -51,7 +51,7 @@ class CategoryControlTest {
         when(authService.userInfo(token)).thenReturn(userInfo);
         mockMvc.perform(get("/category/createForm")
                         .sessionAttr("token", token))
-                .andDo(print())
+                
                 .andExpect(model().attribute("userInfo", userInfo))
                 .andExpect(model().attribute("breadcrumbs", breadcrumbs))
                 .andExpect(status().isOk())
@@ -66,7 +66,7 @@ class CategoryControlTest {
         mockMvc.perform(post("/category/")
                         .requestAttr("category", categoryDTO)
                         .sessionAttr("token", token))
-                .andDo(print())
+                
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/categories/"));
     }
@@ -87,7 +87,7 @@ class CategoryControlTest {
         when(authService.userInfo(token)).thenReturn(userInfo);
         mockMvc.perform(get("/category/editForm/{id}/{name}", id, name)
                         .sessionAttr("token", token))
-                .andDo(print())
+                
                 .andExpect(model().attribute("category", new CategoryDTO(id, name)))
                 .andExpect(model().attribute("userInfo", userInfo))
                 .andExpect(model().attribute("breadcrumbs", breadcrumbs))
@@ -102,7 +102,7 @@ class CategoryControlTest {
         mockMvc.perform(post("/category/update")
                         .sessionAttr("token", token)
                         .requestAttr("category", categoryDTO))
-                .andDo(print())
+                
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/categories/"));
     }

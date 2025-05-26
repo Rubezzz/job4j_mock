@@ -66,7 +66,7 @@ public class TopicsControlTest {
         when(authService.userInfo(token)).thenReturn(userInfo);
         when(notifications.findTopicByUserId(userInfo.getId())).thenReturn(userTopicDto);
         mockMvc.perform(get("/topics/1").sessionAttr("token", token))
-                .andDo(print())
+                
                 .andExpect(status().isOk())
                 .andExpect(view().name("topic/topics"))
                 .andExpect(model().attribute("topics", topics))

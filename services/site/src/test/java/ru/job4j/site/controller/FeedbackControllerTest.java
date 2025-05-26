@@ -58,7 +58,7 @@ class FeedbackControllerTest {
                 new Breadcrumb("Отзыв", "/interview/feedback/" + interviewDTO.getId()));
         this.mockMvc.perform(get("/interview/feedback/{id}", interviewDTO.getId())
                         .sessionAttr("token", token))
-                .andDo(print())
+                
                 .andExpect(model().attribute("interview", interviewDTO))
                 .andExpect(model().attribute("breadcrumbs", breadcrumbs))
                 .andExpect(status().isOk())
@@ -72,7 +72,7 @@ class FeedbackControllerTest {
         when(interviewService.getById(token, interviewId)).thenThrow(new RuntimeException("error"));
         this.mockMvc.perform(get("/interview/feedback/{id}", interviewId)
                         .sessionAttr("token", token))
-                .andDo(print())
+                
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/"));
     }
@@ -85,7 +85,7 @@ class FeedbackControllerTest {
         mockMvc.perform(post("/interview/createFeedback")
                         .flashAttr("feedbackDTO", feedbackDTO)
                         .sessionAttr("token", token))
-                .andDo(print())
+                
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/interview/" + feedbackDTO.getInterviewId()));
     }

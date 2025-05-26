@@ -12,5 +12,8 @@
     </root>
 
     <!-- Specific logger configurations -->
-    <logger name="org.springframework" level="WARN"/>
+    <logger name="liquibase" level="ERROR"/>
+    <logger name="org.springframework" level="ERROR"/>
+    <logger name="org.hibernate" level="ERROR"/>
+    <logger name="ru.checkdev" level="ERROR"/>
 </configuration>

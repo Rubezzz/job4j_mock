@@ -49,7 +49,7 @@ public class SubscribeTopicControllerTest {
     public void whenFindTopicByUserId() throws Exception {
         when(service.findTopicByUserId(subscribeTopic.getUserId())).thenReturn(List.of(subscribeTopic.getUserId()));
         mockMvc.perform(get("/subscribeTopic/2"))
-                .andDo(print())
+                
                 .andExpectAll(status().isOk(),
                         content().contentType(MediaType.APPLICATION_JSON),
                         content().string("[2]"));

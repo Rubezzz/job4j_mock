@@ -67,7 +67,7 @@ class WishersControllerTest {
     public void whenGetAll() throws Exception {
         when(wisherService.findAll()).thenReturn(List.of(wisher));
         mockMvc.perform(get("/wishers/"))
-                .andDo(print())
+                
                 .andExpectAll(status().isOk(),
                         content().contentType(MediaType.APPLICATION_JSON),
                         content().string("[" + wisherString + "]"));
@@ -81,7 +81,7 @@ class WishersControllerTest {
         var expectedList = List.of(wisherDto1, wisherDto2);
         when(wisherService.findAllWisherDto()).thenReturn(expectedList);
         mockMvc.perform(get("/wishers/dto/"))
-                .andDo(print())
+                
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()", Matchers.is(expectedList.size())))
                 .andExpect(jsonPath("$[0].id", Matchers.is(wisherDto1.getId())))
@@ -94,7 +94,7 @@ class WishersControllerTest {
         List<WisherDto> expectedList = new ArrayList<>();
         when(wisherService.findAllWisherDto()).thenReturn(expectedList);
         mockMvc.perform(get("/wishers/dto/"))
-                .andDo(print())
+                
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()", Matchers.is(expectedList.size())));
     }
@@ -106,7 +106,7 @@ class WishersControllerTest {
         var expectList = List.of(wisherDto1);
         when(wisherService.findWisherDtoByInterviewId(wisherDto1.getInterviewId())).thenReturn(expectList);
         mockMvc.perform(get("/wishers/dto/{id}", wisherDto1.getInterviewId()))
-                .andDo(print())
+                
                 .andExpect(jsonPath("$.size()", Matchers.is(expectList.size())))
                 .andExpect(jsonPath("$[0].id", Matchers.is(wisherDto1.getId())))
                 .andExpect(status().isOk());
@@ -125,7 +125,7 @@ class WishersControllerTest {
                 .param("wisherId", String.valueOf(wisherId))
                 .param("newStatusId", String.valueOf(newStatusId))
                 .param("anyStatusId", String.valueOf(anyStatusId)))
-                .andDo(print())
+                
                 .andExpect(status().isOk());
 
     }
