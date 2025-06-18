@@ -6,13 +6,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.job4j.site.dto.CategoryDTO;
+import ru.job4j.site.dto.TopicDTO;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @AllArgsConstructor
 @Service
 public class CategoriesService {
     private final TopicsService topicsService;
+    private final InterviewsService interviewsService;
 
     public List<CategoryDTO> getAll() throws JsonProcessingException {
         var text = new RestAuthCall("http://localhost:9902/categories/").get();
@@ -74,6 +78,22 @@ public class CategoriesService {
                 result = category.getName();
                 break;
             }
+        }
+        return result;
+    }
+
+    public Map<Integer, Integer> getCountInCategory(List<Integer> categoryIds, int mode) throws JsonProcessingException {
+        Map<Integer, Integer> countInTopicByMode = interviewsService.getCountInTopicByMode(mode);
+        Map<Integer, List<TopicDTO>> topicsByCategory = new HashMap<>();
+        for (int id : categoryIds) {
+            topicsByCategory.put(id, topicsService.getByCategory(id));
+        }
+        Map<Integer, Integer> result = new HashMap<>();
+        for (Map.Entry<Integer, List<TopicDTO>> entry : topicsByCategory.entrySet()) {
+            int sum = entry.getValue().stream()
+                    .mapToInt(topic -> countInTopicByMode.getOrDefault(topic.getId(), 0))
+                    .sum();
+            result.put(entry.getKey(), sum);
         }
         return result;
     }

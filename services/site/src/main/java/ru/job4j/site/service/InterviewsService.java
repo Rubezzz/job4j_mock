@@ -10,7 +10,9 @@ import ru.job4j.site.dto.InterviewDTO;
 import ru.job4j.site.util.RestPageImpl;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class InterviewsService {
@@ -71,5 +73,15 @@ public class InterviewsService {
             }
         }
         return builder.toString();
+    }
+
+    public Map<Integer, Integer> getCountInTopicByMode(int mode) throws JsonProcessingException {
+        List<InterviewDTO> interviews = this.getByType(mode);
+        Map<Integer, Integer> rsl = new HashMap<>();
+        for (InterviewDTO interview : interviews) {
+            int topicId = interview.getTopicId();
+            rsl.put(topicId, rsl.getOrDefault(topicId, 0) + 1);
+        }
+        return rsl;
     }
 }

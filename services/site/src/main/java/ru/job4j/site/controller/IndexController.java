@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import ru.job4j.site.dto.CategoryDTO;
 import ru.job4j.site.dto.InterviewDTO;
 import ru.job4j.site.service.*;
 
@@ -31,7 +32,12 @@ public class IndexController {
                 "Главная", "/"
         );
         try {
-            model.addAttribute("categories", categoriesService.getMostPopular());
+            List<CategoryDTO> categories = categoriesService.getMostPopular();
+            List<Integer> ids = categories.stream()
+                    .map(CategoryDTO::getId)
+                    .toList();
+            model.addAttribute("categories", categories);
+            model.addAttribute("countInCategory", categoriesService.getCountInCategory(ids, MODE_NEW));
             var token = getToken(req);
             if (token != null) {
                 var userInfo = authService.userInfo(token);
