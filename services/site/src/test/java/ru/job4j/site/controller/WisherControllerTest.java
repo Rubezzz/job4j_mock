@@ -41,7 +41,7 @@ class WisherControllerTest {
                         .param("interviewId", String.valueOf(wisher.getInterviewId()))
                         .param("userId", String.valueOf(wisher.getUserId()))
                         .param("contactBy", wisher.getContactBy()))
-                .andDo(print())
+                
                 .andExpect(view().name("redirect:/interview/" + wisher.getInterviewId()));
     }
 
@@ -56,7 +56,7 @@ class WisherControllerTest {
                         .sessionAttr("token", token)
                         .param("interviewId", String.valueOf(interviewId))
                         .param("wisherId", String.valueOf(wisherId)))
-                .andDo(print())
+                
                 .andExpect(view().name("redirect:/interview/" + interviewId));
     }
 }

@@ -34,7 +34,7 @@ public class CategoriesControlAnonymousTest {
         category.setId(1);
         when(categoryService.getAll()).thenReturn(List.of(category));
         mockMvc.perform(get("/categories/"))
-                .andDo(print())
+                
                 .andExpectAll(
                         status().isOk(),
                         content().contentType(MediaType.APPLICATION_JSON),

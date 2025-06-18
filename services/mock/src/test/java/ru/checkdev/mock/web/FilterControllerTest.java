@@ -42,7 +42,7 @@ public class FilterControllerTest {
         mockMvc.perform(post("/filter/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(filter)))
-                .andDo(print()).andExpectAll(status().isCreated(),
+                .andExpectAll(status().isCreated(),
                         content().contentType(MediaType.APPLICATION_JSON),
                         content().string(json));
     }
@@ -53,7 +53,7 @@ public class FilterControllerTest {
         when(filterService.findByUserId(1)).thenReturn(Optional.of(filter));
         String json = new GsonBuilder().serializeNulls().create().toJson(filter);
         mockMvc.perform(get("/filter/1"))
-                .andDo(print())
+                
                 .andExpectAll(
                         status().isOk(),
                         content().contentType(MediaType.APPLICATION_JSON),
@@ -66,7 +66,7 @@ public class FilterControllerTest {
         when(filterService.findByUserId(1)).thenReturn(Optional.empty());
         String json = new GsonBuilder().serializeNulls().create().toJson(filter);
         mockMvc.perform(get("/filter/1"))
-                .andDo(print())
+                
                 .andExpectAll(
                         status().isNotFound(),
                         content().contentType(MediaType.APPLICATION_JSON),
@@ -78,7 +78,7 @@ public class FilterControllerTest {
         var filter = new Filter(1, 1, 1);
         when(filterService.deleteByUserId(1)).thenReturn(1);
         mockMvc.perform(delete("/filter/delete/1"))
-                .andDo(print())
+                
                 .andExpectAll(status().isOk(),
                         content().string("true"));
     }
@@ -87,7 +87,7 @@ public class FilterControllerTest {
     public void whenFilterCanNotBeDeleted() throws Exception {
         when(filterService.deleteByUserId(1)).thenReturn(0);
         mockMvc.perform(delete("/filter/delete/1"))
-                .andDo(print())
+                
                 .andExpectAll(status().isNotFound(),
                         content().string("false"));
     }

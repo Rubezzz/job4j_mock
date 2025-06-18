@@ -64,7 +64,7 @@ public class TopicControlTest {
         when(notifications.findTopicByUserId(userInfo.getId())).thenReturn(userTopicDto);
         mockMvc.perform(get("/topic/1")
                         .sessionAttr("token", token))
-                .andDo(print())
+                
                 .andExpect(status().isOk())
                 .andExpect(view().name("topic/details"))
                 .andExpect(model().attribute("topic", topic))
@@ -90,7 +90,7 @@ public class TopicControlTest {
         when(authService.userInfo(token)).thenReturn(userInfo);
         mockMvc.perform(get("/topic/createForm/1")
                         .sessionAttr("token", token))
-                .andDo(print())
+                
                 .andExpect(model().attribute("categoryId", 1))
                 .andExpect(model().attribute("breadcrumbs", breadcrumbs))
                 .andExpect(status().isOk())
@@ -105,7 +105,7 @@ public class TopicControlTest {
         topic.setText("Some text");
         mockMvc.perform(post("/topic/create")
                         .requestAttr("topic", topic))
-                .andDo(print())
+                
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/categories/"));
     }
@@ -132,7 +132,7 @@ public class TopicControlTest {
         when(authService.userInfo(token)).thenReturn(userInfo);
         when(topicsService.getById(1)).thenReturn(topic);
         mockMvc.perform(get("/topic/updateForm/1").sessionAttr("token", token))
-                .andDo(print())
+                
                 .andExpect(status().isOk())
                 .andExpect(view().name("topic/updateForm"))
                 .andExpect(model().attribute("topic", topic))
@@ -159,7 +159,7 @@ public class TopicControlTest {
         mockMvc.perform(post("/topic/update")
                         .requestAttr("topic", topic)
                 .param("id", String.valueOf(topic.getId())))
-                .andDo(print())
+                
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/topic/" + topic.getId()));
     }
@@ -168,7 +168,7 @@ public class TopicControlTest {
     public void whenTopicDeleted() throws Exception {
         mockMvc.perform(post("/topic/delete")
                         .param("id", "1"))
-                .andDo(print())
+                
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/categories/"));
     }

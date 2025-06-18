@@ -96,7 +96,7 @@ public class InterviewsControllerTest {
                         .sessionAttr("token", token)
                         .param("page", "1")
                         .param("size", "5"))
-                .andDo(print())
+                
                 .andExpect(model().attribute("statisticMap", new HashMap<>()))
                 .andExpect(model().attribute("interviewsPage", page))
                 .andExpect(model().attribute("statuses", StatusInterview.values()))

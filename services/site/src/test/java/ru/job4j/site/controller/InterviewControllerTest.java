@@ -68,7 +68,7 @@ public class InterviewControllerTest {
         when(wisherService.isWisher(userInfo.getId(), interview.getId(), wisherDtos)).thenReturn(false);
         mockMvc.perform(get("/interview/{id}", interview.getId())
                         .sessionAttr("token", token))
-                .andDo(print())
+                
                 .andExpect(model().attribute("interview", interview))
                 .andExpect(model().attribute("breadcrumbs", breadcrumbs))
                 .andExpect(model().attribute("userInfo", userInfo))
@@ -106,7 +106,7 @@ public class InterviewControllerTest {
         mockMvc.perform(get("/interview/createForm")
                         .sessionAttr("token", token)
                         .param("topicId", "1"))
-                .andDo(print())
+                
                 .andExpect(model().attribute("category", topic.getCategory()))
                 .andExpect(model().attribute("topic", topic))
                 .andExpect(model().attribute("breadcrumbs", breadcrumbs))
@@ -136,7 +136,7 @@ public class InterviewControllerTest {
                         .flashAttr("interviewDTO", interview)
                         .sessionAttr("token", token)
                         .param("topicId", "1"))
-                .andDo(print())
+                
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/interview/" + interview.getId()));
     }
@@ -161,7 +161,7 @@ public class InterviewControllerTest {
         when(interviewService.getById(token, interview.getId())).thenReturn(interview);
         mockMvc.perform(get("/interview/edit/{id}", interview.getId())
                         .sessionAttr("token", token))
-                .andDo(print())
+                
                 .andExpect(model().attribute("userInfo", userInfo))
                 .andExpect(model().attribute("interview", interview))
                 .andExpect(model().attribute("breadcrumbs", breadcrumbs))
@@ -184,7 +184,7 @@ public class InterviewControllerTest {
         when(interviewService.getById(token, interview.getId())).thenReturn(interview);
         mockMvc.perform(get("/interview/edit/{id}", interview.getId())
                         .sessionAttr("token", token))
-                .andDo(print())
+                
                 .andExpect(model().attribute("userInfo", userInfo))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/interview/" + interview.getId()));
@@ -205,7 +205,7 @@ public class InterviewControllerTest {
         when(interviewService.getById(token, interview.getId())).thenThrow(JsonProcessingException.class);
         mockMvc.perform(get("/interview/edit/{id}", interview.getId())
                         .sessionAttr("token", token))
-                .andDo(print())
+                
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/interviews/"));
     }
@@ -225,7 +225,7 @@ public class InterviewControllerTest {
                         .param("id", String.valueOf(interview.getId()))
                         .param("submitterId", String.valueOf(interview.getSubmitterId()))
                 )
-                .andDo(print())
+                
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/interview/" + interview.getId()));
     }
@@ -244,7 +244,7 @@ public class InterviewControllerTest {
                         .param("id", String.valueOf(interview.getId()))
                         .param("submitterId", String.valueOf(interview.getSubmitterId()))
                 )
-                .andDo(print())
+                
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/interview/edit/" + interview.getId()));
     }
@@ -281,7 +281,7 @@ public class InterviewControllerTest {
         mockMvc.perform(get(String.format("/interview/%d/participate", interviewId))
                         .sessionAttr("token", token)
                 )
-                .andDo(print()).andExpectAll(status().isOk(),
+                .andExpectAll(status().isOk(),
                         model().attribute("breadcrumbs", List.of(
                                 new Breadcrumb("Главная", "/index"),
                                 new Breadcrumb("Собеседования", "/interviews/"),
@@ -305,7 +305,7 @@ public class InterviewControllerTest {
         when(interviewService.getById(token, interviewId)).thenReturn(interview);
         mockMvc.perform(get(String.format("/interview/%d/participate", interviewId))
                 )
-                .andDo(print()).andExpectAll(status().is3xxRedirection(),
+                .andExpectAll(status().is3xxRedirection(),
                         view().name(String.format("redirect:/interview/%d", interviewId)));
     }
 }

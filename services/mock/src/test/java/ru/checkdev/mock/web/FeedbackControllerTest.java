@@ -60,7 +60,7 @@ class FeedbackControllerTest {
         mockMvc.perform(post("/feedback/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(feedbackDTO)))
-                .andDo(print())
+                
                 .andExpect(status().isCreated());
     }
 
@@ -73,7 +73,7 @@ class FeedbackControllerTest {
         mockMvc.perform(post("/feedback/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(feedbackDTO)))
-                .andDo(print())
+                
                 .andExpect(status().isNotFound());
     }
 
@@ -87,7 +87,7 @@ class FeedbackControllerTest {
         var listDTO = List.of(feedbackDTO, feedbackDTO1);
         when(service.findByInterviewId(feedbackDTO.getInterviewId())).thenReturn(listDTO);
         mockMvc.perform(get("/feedback/" + feedbackDTO.getInterviewId()))
-                .andDo(print())
+                
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()", Matchers.is(listDTO.size())))
                 .andExpect(jsonPath("$[0].id", Matchers.is(feedbackDTO.getId())));
@@ -98,7 +98,7 @@ class FeedbackControllerTest {
     void whenFindAllByInterviewIdThenReturnStatusOkEmptyList() throws Exception {
         when(service.findByInterviewId(anyInt())).thenReturn(Collections.emptyList());
         mockMvc.perform(get("/feedback/" + anyInt()))
-                .andDo(print())
+                
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()", Matchers.is(0)));
     }
@@ -112,7 +112,7 @@ class FeedbackControllerTest {
         mockMvc.perform(get("/feedback/")
                         .param("iId", String.valueOf(feedbackDTO.getInterviewId()))
                         .param("uId", String.valueOf(feedbackDTO.getUserId())))
-                .andDo(print())
+                
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id", Matchers.is(feedbackDTO.getId())))
                 .andExpect(jsonPath("$[0].interviewId", Matchers.is(feedbackDTO.getInterviewId())))
@@ -128,7 +128,7 @@ class FeedbackControllerTest {
         mockMvc.perform(get("/feedback/")
                         .param("iId", String.valueOf(feedbackDTO.getInterviewId()))
                         .param("uId", String.valueOf(feedbackDTO.getUserId())))
-                .andDo(print())
+                
                 .andExpect(status().isNotFound());
     }
 }

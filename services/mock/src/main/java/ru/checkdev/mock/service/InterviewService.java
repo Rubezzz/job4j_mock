@@ -32,7 +32,7 @@ public class InterviewService {
         try {
             rsl = Optional.of(interviewRepository.save(interview));
         } catch (DataIntegrityViolationException e) {
-            LOG.error("Error!", e);
+            LOG.warn(String.format("Duplicate interview: %s",  interview), e);
         }
         return rsl;
     }

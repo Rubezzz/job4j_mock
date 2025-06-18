@@ -66,7 +66,7 @@ class InterviewsControllerTest {
         when(service.findPaging(Mockito.anyInt(), Mockito.anyInt()))
                 .thenReturn(page);
         mockMvc.perform(get("/interviews/"))
-                .andDo(print())
+                
                 .andExpectAll(status().isOk(),
                         content().contentType(MediaType.APPLICATION_JSON));
     }
@@ -94,7 +94,7 @@ class InterviewsControllerTest {
         when(service.findPaging(Mockito.anyInt(), Mockito.anyInt()))
                 .thenReturn(page);
         mockMvc.perform(get("/interviews/findByTopicsIds/1,2,3"))
-                .andDo(print())
+                
                 .andExpectAll(status().isOk(),
                         content().contentType(MediaType.APPLICATION_JSON));
     }

@@ -26,7 +26,7 @@ public class WisherService {
         try {
             rsl = Optional.of(wisherRepository.save(wisher));
         } catch (DataIntegrityViolationException e) {
-            LOG.error("Error!", e);
+            LOG.warn(String.format("Duplicate wished: %s", wisher), e);
         }
         return rsl;
     }

@@ -49,7 +49,7 @@ class PersonControllerTest {
         when(personService.getPerson(token)).thenReturn(person);
         this.mockMvc.perform(get("/persons/")
                         .sessionAttr("token", token))
-                .andDo(print())
+                
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("personDto", person))
                 .andExpect(view().name("/persons/personView"));
@@ -58,7 +58,7 @@ class PersonControllerTest {
     @Test
     void whenGetViewPersonNullThenRedirectStartPage() throws Exception {
         this.mockMvc.perform(get("/persons/"))
-                .andDo(print())
+                
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/"));
     }
@@ -73,7 +73,7 @@ class PersonControllerTest {
         when(personService.getPerson(token)).thenReturn(person);
         this.mockMvc.perform(get("/persons/edit")
                         .sessionAttr("token", token))
-                .andDo(print())
+                
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("personDto", person))
                 .andExpect(view().name("/persons/personEdit"));
@@ -82,7 +82,7 @@ class PersonControllerTest {
     @Test
     void getEditPersonNullThenRedirectStartPage() throws Exception {
         this.mockMvc.perform(get("/persons/edit"))
-                .andDo(print())
+                
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/"));
     }
@@ -108,7 +108,7 @@ class PersonControllerTest {
                         .accept(MediaType.MULTIPART_FORM_DATA)
                         .requestAttr("personDTO", person)
                         .sessionAttr("token", token))
-                .andDo(print())
+                
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/persons/"));
     }
@@ -134,7 +134,7 @@ class PersonControllerTest {
                         .accept(MediaType.MULTIPART_FORM_DATA)
                         .requestAttr("personDTO", person)
                         .sessionAttr("token", token))
-                .andDo(print())
+                
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/persons/edit?error=true"));
     }
@@ -160,7 +160,7 @@ class PersonControllerTest {
                         .accept(MediaType.MULTIPART_FORM_DATA)
                         .requestAttr("personDTO", person)
                         .sessionAttr("token", token))
-                .andDo(print())
+                
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/persons/edit?error=true"));
     }

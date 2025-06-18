@@ -51,7 +51,7 @@ public class SubscribeCategoriesControllerTest {
     public void whenFindCategoriesByUserId() throws Exception {
         when(service.findCategoriesByUserId(subscribeCategory.getUserId())).thenReturn(List.of(subscribeCategory.getUserId()));
         mockMvc.perform(get("/subscribeCategory/2"))
-                .andDo(print())
+                
                 .andExpectAll(status().isOk(),
                         content().contentType(MediaType.APPLICATION_JSON),
                         content().string("[2]"));

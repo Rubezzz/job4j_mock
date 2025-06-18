@@ -58,8 +58,7 @@ public class ProfileControllerTest {
                 .andExpect(jsonPath("$.id").value(profileDTO1.getId()))
                 .andExpect(jsonPath("$.username").value(profileDTO1.getUsername()))
                 .andExpect(jsonPath("$.experience").value(profileDTO1.getExperience()))
-                .andExpect(jsonPath("$.photoId").value(profileDTO1.getPhotoId()))
-                .andDo(print());
+                .andExpect(jsonPath("$.photoId").value(profileDTO1.getPhotoId()));
     }
 
     @SuppressWarnings("checkstyle:OperatorWrap")
@@ -68,8 +67,7 @@ public class ProfileControllerTest {
     public void whenGetProfileByIdProfileNotFoundThenReturnStatusNotFound() throws Exception {
         when(profileService.findProfileByID(profileDTO1.getId())).thenReturn(Optional.empty());
         mockMvc.perform(get("/profiles/{id}/", anyInt()))
-                .andExpect(status().isNoContent())
-                .andDo(print());
+                .andExpect(status().isNoContent());
     }
 
     @Test
@@ -79,8 +77,7 @@ public class ProfileControllerTest {
         when(profileService.findProfilesOrderByCreatedDesc()).thenReturn(profiles);
         mockMvc.perform(get("/profiles/"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.size()").value(profiles.size()))
-                .andDo(print());
+                .andExpect(jsonPath("$.size()").value(profiles.size()));
     }
 
     @Test
@@ -88,7 +85,6 @@ public class ProfileControllerTest {
     public void whenGetAllProfilesOrderByCreateDescListEmptyThenReturnStatusNoContent() throws Exception {
         when(profileService.findProfilesOrderByCreatedDesc()).thenReturn(Collections.emptyList());
         mockMvc.perform(get("/profiles/"))
-                .andExpect(status().isNoContent())
-                .andDo(print());
+                .andExpect(status().isNoContent());
     }
 }
