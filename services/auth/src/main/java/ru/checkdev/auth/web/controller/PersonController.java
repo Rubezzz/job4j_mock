@@ -11,6 +11,7 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.checkdev.auth.domain.Profile;
+import ru.checkdev.auth.dto.ProfileTgDTO;
 import ru.checkdev.auth.service.PersonService;
 import ru.checkdev.auth.service.RoleService;
 
@@ -146,5 +147,18 @@ public class PersonController {
         map.put("personsShowed", persons.findByShow(true, PageRequest.of(pageToShow, limit)));
         map.put("getTotal", persons.showed());
         return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+
+    @GetMapping("/tg/{tgId}")
+    public ResponseEntity<ProfileTgDTO> getProfileTg(@PathVariable long tgId) throws ServletException {
+        Optional<ProfileTgDTO> profile = persons.getProfileTgByTgId(tgId);
+        return profile
+                .map(profileTgDTO -> new ResponseEntity<>(profileTgDTO, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NO_CONTENT));
+    }
+
+    @PutMapping("/changeTelegram")
+    public void changeTelegramId(@RequestBody ProfileTgDTO profile) {
+        persons.setTelegramIdByEmail(profile.getEmail(), profile.getTelegramId());
     }
 }

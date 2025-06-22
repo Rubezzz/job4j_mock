@@ -25,6 +25,7 @@ import ru.checkdev.auth.domain.Notify;
 import ru.checkdev.auth.domain.Profile;
 import ru.checkdev.auth.domain.Photo;
 import ru.checkdev.auth.domain.Role;
+import ru.checkdev.auth.dto.ProfileTgDTO;
 import ru.checkdev.auth.repository.PersonRepository;
 
 import javax.imageio.IIOImage;
@@ -57,7 +58,7 @@ public class PersonService {
     public Optional<Profile> reg(Profile profile) {
         Optional<Profile> result = Optional.empty();
         try {
-            if (profile.isPrivacy()) {
+            if (profile.isPrivacy() && this.getProfileTgByTgId(profile.getTelegramId()).isEmpty()) {
                 profile.setRoles(null);
                 profile.setActive(true);
                 profile.setKey(
@@ -309,5 +310,13 @@ public class PersonService {
         }
         emptyNames.addAll(Arrays.asList(extra));
         return emptyNames;
+    }
+
+    public Optional<ProfileTgDTO> getProfileTgByTgId(long tgId) {
+        return Optional.ofNullable(persons.findProfileTgByTgId(tgId));
+    }
+
+    public void setTelegramIdByEmail(String email, Long telegramId) {
+        persons.updateTelegramIdByEmail(email, telegramId);
     }
 }

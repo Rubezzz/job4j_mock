@@ -6,9 +6,11 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 import ru.checkdev.auth.domain.Profile;
 import ru.checkdev.auth.domain.Photo;
 import ru.checkdev.auth.dto.ProfileDTO;
+import ru.checkdev.auth.dto.ProfileTgDTO;
 
 import java.util.List;
 
@@ -75,4 +77,12 @@ public interface PersonRepository extends CrudRepository<Profile, Integer> {
 
     @Query("SELECT new ru.checkdev.auth.dto.ProfileDTO(p.id, p.username, p.experience, p.photo.id, p.updated, p.created) FROM profile p WHERE p.id IN :id")
     List<ProfileDTO> findAllById(@Param("id") List<Integer> id);
+
+    @Query("SELECT new ru.checkdev.auth.dto.ProfileTgDTO(p.id, p.username, p.email) FROM profile p WHERE p.telegramId = :tgId")
+    ProfileTgDTO findProfileTgByTgId(@Param("tgId") long tgId);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE profile p SET p.telegramId = :telegramId WHERE email = :email")
+    void updateTelegramIdByEmail(@Param("email") String email, @Param("telegramId") Long telegramId);
 }

@@ -17,6 +17,10 @@ import java.util.regex.Pattern;
 public class TgConfig {
     private static final ObjectMapper MAPPER = new ObjectMapper();
     private static final Pattern EMAIL_PATTERN = Pattern.compile("\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*\\.\\w{2,4}");
+    public static final String START_MESSAGE = "Список доступных команд: /start";
+    public static final String ERROR_SERVICE_MESSAGE = "Сервис не доступен попробуйте позже" + System.lineSeparator()
+            + "/start";
+
     private final String prefix;
     private final int passSize;
 

@@ -14,6 +14,7 @@ import java.util.Collections;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 /**
@@ -59,8 +60,9 @@ class TgAuthCallWebClintTest {
         when(webClientMock.get()).thenReturn(requestHeadersUriMock);
         when(requestHeadersUriMock.uri("/person/" + personId)).thenReturn(requestHeadersMock);
         when(requestHeadersMock.retrieve()).thenReturn(responseMock);
+        when(responseMock.onStatus(any(), any())).thenReturn(responseMock);
         when(responseMock.bodyToMono(PersonDTO.class)).thenReturn(Mono.just(personDto));
-        PersonDTO actual = tgAuthCallWebClint.doGet("/person/" + personId).block();
+        PersonDTO actual = tgAuthCallWebClint.doGet("/person/" + personId, PersonDTO.class).block();
         assertThat(actual).isEqualTo(personDto);
     }
 
@@ -70,8 +72,9 @@ class TgAuthCallWebClintTest {
         when(webClientMock.get()).thenReturn(requestHeadersUriMock);
         when(requestHeadersUriMock.uri("/person/" + personId)).thenReturn(requestHeadersMock);
         when(requestHeadersMock.retrieve()).thenReturn(responseMock);
+        when(responseMock.onStatus(any(), any())).thenReturn(responseMock);
         when(responseMock.bodyToMono(PersonDTO.class)).thenReturn(Mono.error(new Throwable("Error")));
-        assertThatThrownBy(() -> tgAuthCallWebClint.doGet("/person/" + personId).block())
+        assertThatThrownBy(() -> tgAuthCallWebClint.doGet("/person/" + personId, PersonDTO.class).block())
                 .isInstanceOf(Throwable.class)
                 .hasMessageContaining("Error");
     }
